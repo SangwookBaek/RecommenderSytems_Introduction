@@ -1,0 +1,5 @@
+#데이터 디렉토리 무시
+data/
+
+#pycache 무시
+__pycache__/
