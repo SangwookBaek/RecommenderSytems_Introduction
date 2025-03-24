@@ -64,10 +64,6 @@ class RandomRecommender(BaseRecommender):
 
 class My_RandomRecommender(BaseRecommender):
     def recommend(self, dataset: Dataset, **kwargs) -> RecommendResult:
-        import time
-        import numpy as np
-        from collections import defaultdict
-
         start_time = time.time()
 
         # 사용자 및 아이템의 인덱스 매핑 (정렬하여 고정된 순서 부여)

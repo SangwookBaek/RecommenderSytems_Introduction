@@ -29,7 +29,9 @@ class BaseRecommender(ABC):
                    num_users: int = 1000,
                    num_test_items: int = 5,
                    data_path: str = "./data/ml-10M100K/",
-                   k: int = 10) -> None:
+                   k: int = 10,
+                   **kwargs  # <-- 추가: recommend로 넘길 추가 파라미터들
+                   ) -> None:
         """
         run_sample 실행 시 사용할 파라미터들을 입력받으며,
         생성자에서 설정된 데이터 로더 클래스를 사용하여 데이터를 로드한 후,
@@ -38,9 +40,11 @@ class BaseRecommender(ABC):
         # 데이터 로더를 통해 데이터셋 로딩
         loading_time = time.time()
         movielens = self.data_loader_cls(num_users=num_users, num_test_items=num_test_items, data_path=data_path).load()
-        print(f'데이터 로딩 시간 : {time.time()-loading_time:.2f}초')
+        print(f'데이터 로딩 시간 : {time.time()-loading_time:.4f}초')
         # 추천 결과 계산
-        recommend_result = self.recommend(movielens)
+        recommend_time = time.time()
+        recommend_result = self.recommend(movielens, **kwargs)
+        print(f'추천 소요 시간 : {time.time()-recommend_time:.4f}초')
         
         # 추천 결과 평가
         metrics = MetricCalculator().calc(
