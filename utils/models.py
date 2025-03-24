@@ -39,19 +39,18 @@ class DaskDataset:
 import pyarrow as pa
 @dataclasses.dataclass(frozen=True)
 class ArrowDataset:
-    '''
-    pyarrow로 최적화, IO 속도가 빨라진다. column wise라 메모리 사용이 효율적
-    pa.table() or pa.csv.read_csv()로 불러와야함
-    '''
-    # 학습용 평갓값 데이터셋
-    train: pa.Table
-    # 테스트용 평갓값 데이터셋
-    test: pa.Table
+    """
+    이제 pyarrow Table 대신 Pandas DataFrame을 그대로 저장합니다.
+    컬럼 접근 및 수정이 DataFrame 방식으로 가능하므로, 이후 코드에서 편하게 사용할 수 있습니다.
+    """
+    # 학습용 평갓값 데이터셋 (Pandas DataFrame)
+    train: pd.DataFrame
+    # 테스트용 평갓값 데이터셋 (Pandas DataFrame)
+    test: pd.DataFrame
     # 순위 지표의 테스트 데이터셋. 키는 사용자 ID, 값은 사용자가 높이 평가한 아이템의 ID 리스트
     test_user2items: Dict[int, List[int]]
-    # 아이템 콘텐츠 정보
-    item_content: pa.Table
-
+    # 아이템 콘텐츠 정보 (Pandas DataFrame)
+    item_content: pd.DataFrame
 
 
 
